@@ -9,7 +9,10 @@ let updateInterval: any;
 export function startSchedule(callback: (...args: any[]) => void) {
     if (configuration.shouldShowFractionalSeconds()) {
         scheduleMillisecondUpdates(callback);
-    } else if (configuration.shouldShowSeconds() || configuration.shouldFlashTimeSeparators()) {
+    } else if (
+        configuration.shouldShowSeconds() ||
+        configuration.shouldFlashTimeSeparators()
+    ) {
         scheduleSecondUpdates(callback);
     } else {
         scheduleMinuteUpdates(callback);
@@ -31,7 +34,8 @@ export function stopSchedule() {
 function scheduleMillisecondUpdates(callback: (...args: any[]) => void) {
     updateInterval = setInterval(
         callback,
-        (1 / configuration.getFractionalPrecision()) * seconds);
+        (1 / configuration.getFractionalPrecision()) * seconds
+    );
 }
 
 function scheduleSecondUpdates(callback: (...args: any[]) => void) {
@@ -41,7 +45,7 @@ function scheduleSecondUpdates(callback: (...args: any[]) => void) {
 function scheduleMinuteUpdates(callback: (...args: any[]) => void) {
     firstUpdateTimeout = setTimeout(() => {
         callback();
-        updateInterval = setInterval(callback, (1 * minutes));
+        updateInterval = setInterval(callback, 1 * minutes);
         firstUpdateTimeout = null;
-    }, (1 * minutes) - (new Date().getSeconds() * seconds));
+    }, 1 * minutes - new Date().getSeconds() * seconds);
 }

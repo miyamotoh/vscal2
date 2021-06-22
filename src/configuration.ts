@@ -1,17 +1,27 @@
-import { workspace } from "vscode";
+import { env, StatusBarAlignment, workspace } from "vscode";
 
-export enum FlashState { On = 1, Off = 2 }
+export enum FlashState {
+    On = 1,
+    Off = 2,
+}
 
-let cache = getDefaultCache();
+let cache: {
+    format: {
+        [FlashState.On]: string | null;
+        [FlashState.Off]: string | null;
+    };
+    configuration: {
+        [key: string]: any;
+    };
+} = getDefaultCache();
 
 function getDefaultCache() {
     return {
         format: {
-            [FlashState.On]: null as string,
-            [FlashState.Off]: null as string
+            [FlashState.On]: null,
+            [FlashState.Off]: null,
         },
-        configuration: {
-        }
+        configuration: {},
     };
 }
 
@@ -31,7 +41,9 @@ export function clearCache() {
 
 function getConfiguration(property: string) {
     if (!cache.configuration.hasOwnProperty(property)) {
-        cache.configuration[property] = workspace.getConfiguration("dateTime")[property];
+        cache.configuration[property] = workspace.getConfiguration("dateTime")[
+            property
+        ];
     }
     return cache.configuration[property];
 }
@@ -40,8 +52,11 @@ export function shouldShowOnStartup(): boolean {
     return getConfiguration("showOnStartup");
 }
 
-export function getCustomFormat(flashState: FlashState): string {
-    const format = getConfiguration("customFormat");
+export function getCustomFormat(
+    flashState: FlashState,
+    property = "customFormat"
+): string | null {
+    const format = getConfiguration(property);
 
     if (!format) {
         return null;
@@ -55,12 +70,17 @@ export function getCustomFormat(flashState: FlashState): string {
     }
 }
 
+export function getLocale(): string {
+    return getConfiguration("locale") || env.language;
+}
+
 const timeCharacters = "HhmSs";
 function getFormatTimeSeparatorRegExp(): RegExp {
     const separator = escapeRegExp(getTimeSeparator());
     return new RegExp(
         `([${timeCharacters}]+[^${timeCharacters}${separator}]*)${separator}`,
-        "g");
+        "g"
+    );
 }
 
 export function shouldShowHours(): boolean {
@@ -80,7 +100,7 @@ export function shouldShowSeconds(): boolean {
 }
 
 export function shouldShowFractionalSeconds(): boolean {
-    return getFormat(FlashState.On).indexOf('S') > -1;
+    return getFormat(FlashState.On).indexOf("S") > -1;
 }
 
 export function getFractionalPrecision(): number {
@@ -174,10 +194,11 @@ export function weekStartsOn(): number {
 
 export function getFormat(flashState: FlashState): string {
     if (!cache.format[flashState]) {
-        cache.format[flashState] = getCustomFormat(flashState) || composeFormat(flashState);
+        cache.format[flashState] =
+            getCustomFormat(flashState) || composeFormat(flashState);
     }
 
-    return cache.format[flashState];
+    return cache.format[flashState]!;
 }
 
 export function hasFormat(): boolean {
@@ -185,9 +206,10 @@ export function hasFormat(): boolean {
 }
 
 function composeFormat(flashState: FlashState): string {
-    const separator = flashState === FlashState.On
-        ? getTimeSeparator()
-        : getTimeSeparatorOff();
+    const separator =
+        flashState === FlashState.On
+            ? getTimeSeparator()
+            : getTimeSeparatorOff();
 
     let format = "";
 
@@ -228,6 +250,27 @@ function composeFormat(flashState: FlashState): string {
     }
 
     return format;
+}
+
+export function getStatusBarAlignment(): StatusBarAlignment {
+    return getConfiguration("statusBarAlignment") === "left"
+        ? StatusBarAlignment.Left
+        : StatusBarAlignment.Right;
+}
+
+export function getStatusBarPriority(): number {
+    const configuredPriority = getConfiguration("statusBarPriority");
+    if (typeof configuredPriority === "number") {
+        return configuredPriority;
+    }
+
+    switch (getStatusBarAlignment()) {
+        case StatusBarAlignment.Left:
+            return 100_000;
+
+        case StatusBarAlignment.Right:
+            return -100_000;
+    }
 }
 
 function escapeRegExp(string: string): string {

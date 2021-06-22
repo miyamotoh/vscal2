@@ -11,26 +11,30 @@ Now works on Windows the same way as Mac/Linux! Enjoy!!
 
 ## Configuration Options
 
-|Option                         |Default|Description                                        |Example       |
-|-------------------------------|-------|---------------------------------------------------|--------------|
-|`dateTime.showOnStartup`       |`true` |Show date & time on startup.                       |              |
-|`dateTime.use24HourClock`      |`true` |Use a 24 hour clock.                               |**18**:43     |
-|`dateTime.showAMPM`            |`false`|Show AM/PM.                                        |7:43 **PM**   |
-|`dateTime.showDayOfWeek`       |`false`|Show the day of the week.                          |**Fri** 1 Jul |
-|`dateTime.showDayOfMonth`      |`false`|Show the day of the month.                         |Fri **1** Jul |
-|`dateTime.showMonth`           |`false`|Show the month.                                    |Fri 1 **Jul** |
-|`dateTime.showHours`           |`true` |Show hours.                                        |**18**:43     |
-|`dateTime.showMinutes`         |`true` |Show minutes.                                      |18:**43**     |
-|`dateTime.showSeconds`         |`false`|Show seconds.                                      |18:43:**12**  |
-|`dateTime.padDays`             |`false`|Pad the day of the month with a leading 0.         |Fri **01** Jul|
-|`dateTime.padHours`            |`true` |Pad hours with a leading 0.                        |**09**:43     |
-|`dateTime.padMinutes`          |`true` |Pad minutes with a leading 0.                      |18:**03**     |
-|`dateTime.padSeconds`          |`true` |Pad seconds with a leading 0.                      |18:43:**04**  |
-|`dateTime.flashTimeSeparators` |`false`|Flash the time separators.                         |              |
-|`dateTime.timeSeparator`       |`:`    |Time separator character.                          |              |
-|`dateTime.timeSeparatorOff`    |` `    |Flashing time separator character.                 |              |
-|`dateTime.customFormat`        |`null` |Use a custom date & time format.                   |              |
-|`dateTime.fractionalPrecision` |`null` |Update interval divisor for fractional seconds.    |              |
+|Option                        |Default|Description                                        |Example       |
+|------------------------------|-------|---------------------------------------------------|--------------|
+|`dateTime.showOnStartup`      |`true` |Show date & time on startup.                       |              |
+|`dateTime.use24HourClock`     |`true` |Use a 24 hour clock.                               |**18**:43     |
+|`dateTime.showAMPM`           |`false`|Show AM/PM.                                        |7:43 **PM**   |
+|`dateTime.showDayOfWeek`      |`false`|Show the day of the week.                          |**Fri** 1 Jul |
+|`dateTime.showDayOfMonth`     |`false`|Show the day of the month.                         |Fri **1** Jul |
+|`dateTime.showMonth`          |`false`|Show the month.                                    |Fri 1 **Jul** |
+|`dateTime.showHours`          |`true` |Show hours.                                        |**18**:43     |
+|`dateTime.showMinutes`        |`true` |Show minutes.                                      |18:**43**     |
+|`dateTime.showSeconds`        |`false`|Show seconds.                                      |18:43:**12**  |
+|`dateTime.padDays`            |`false`|Pad the day of the month with a leading 0.         |Fri **01** Jul|
+|`dateTime.padHours`           |`true` |Pad hours with a leading 0.                        |**09**:43     |
+|`dateTime.padMinutes`         |`true` |Pad minutes with a leading 0.                      |18:**03**     |
+|`dateTime.padSeconds`         |`true` |Pad seconds with a leading 0.                      |18:43:**04**  |
+|`dateTime.locale`             |`null` |Date & time locale.                                |es-us         |
+|`dateTime.flashTimeSeparators`|`false`|Flash the time separators.                         |              |
+|`dateTime.timeSeparator`      |`:`    |Time separator character.                          |              |
+|`dateTime.timeSeparatorOff`   |` `    |Flashing time separator character.                 |              |
+|`dateTime.customFormat`       |`null` |Use a custom date & time format.                   |              |
+|`dateTime.clipboardFormat`    |`null` |Use a custom date & time format when copying.      |              |
+|`dateTime.fractionalPrecision`|`null` |Update interval divisor for fractional seconds.    |              |
+|`dateTime.statusBarAlignment` |`right`|Status bar alignment, left or right.               |left          |
+|`dateTime.statusBarPriority`  |`null` |Status bar priority. Higher means more to the left.|10            |
 |`dateTime.monthsBefore`        |`1`    |How many prior months to show in calendar view.    |2             |
 |`dateTime.monthsAfter`         |`1`    |How many following months to show in calendar view.|10            |
 |`dateTime.monthsPerRow`        |`3`    |How many months to show horizontally.              |4             |
@@ -116,6 +120,8 @@ Custom date & time formats can be specified using the [Moment.js syntax](http://
 
 ## Release Notes
 
+### v1.4.3
+Pull and merge latest from rid9
 ### v1.4.1
 Starts reading day & month names from system 'default', hoping this helps non-English (untested :wink:)
 

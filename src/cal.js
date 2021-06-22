@@ -5,6 +5,11 @@ var days = [];   // locale dependent
 var months = []; // locale dependent
 var weekStartsOn = 0;
 
+var now; // Date object
+var days = [];   // locale dependent
+var months = []; // locale dependent
+var weekStartsOn = 0;
+
 const createMonthTag = (month, year, now) => {
     let tag = '';
     for (let i = 1; i <= (15 - months[month].length) / 2; i++) {tag += ' ';}
